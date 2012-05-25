@@ -24,7 +24,6 @@
 			
 				var data={msg:"send from Module1"};
 				$('#sandboxBtn').bind('click', function(){Sandbox.notify(Searchweb.Config.Events.DELETE, data);});
-				alert(xx.xx);
 			},
 			
 			_fetchdata:function(){

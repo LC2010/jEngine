@@ -20,6 +20,8 @@
 						
 			createHTML:function(){
 				alert("lazyloadModule2 loaded!");
+				
+				//$('#mod-search-link').bind('mouseover', function(){alert("mouseover");})
 			},
 			
 			end:0
