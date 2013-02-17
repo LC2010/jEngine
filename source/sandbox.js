@@ -41,6 +41,7 @@
 
     function Mediator(obj) {
 		this.channels = {};
+		this.dataTable = {};
 		if (obj) this.installTo(obj);
     }
 
@@ -155,6 +156,31 @@
 		  return this;
 		},
 		
+		/**
+		* @method: get
+		* @param: key: 要存储对象的索引键（string）
+		*/
+		get: function(key){
+			
+			var val = null;
+			if( typeof(key) === "string"){
+				val = this.dataTable[key];
+			}
+			return val;
+		},
+		
+		/**
+		* @method: set
+		* @param: key: 要存储对象的索引键（string）
+		* @param: val: 要存储对象（object）
+		*/
+		set: function(key, val){
+			
+			if( typeof(key) === "string"){
+				
+				this.dataTable[key] = val;
+			}
+		},
 		
 		/**
 		* @method: installTo，为sandbox实例添加事件方法。
@@ -165,6 +191,9 @@
 			obj.on = this.on;
 			obj.off = this.off;
 			obj.notify = this.notify;
+			obj.get = this.get;
+			obj.set = this.set;
+			obj.dataTable = this.dataTable;
 			obj.channels = this.channels;
 		  }
 		  return this;

@@ -59,7 +59,7 @@
 		_handler: function(level, name, msg, moduleId){
 		 
 			var method=methods[level];
-			var logstr=[[method+"|"].join(" | ")].concat(Array.prototype.slice.call(msg));
+			var logstr=[[method+"|"].join(" | ")].concat(msg);
 			   
 			if(self.console && !$.browser.msie){
 			
