@@ -46,7 +46,7 @@
 		end:0
 	};
 	
-	Searchweb.Config.Event={
+	Searchweb.Config.Events={
 	
 		DELETE:"module1/delete",
 		end:0

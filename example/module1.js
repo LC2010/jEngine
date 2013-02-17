@@ -21,7 +21,10 @@
 			//简易的MVC分层模式，以下三个函数分别对应controller、modal、view层。
 			//模块开发时请使用相同的函数名称，便于团队合作开发。
 			_bindEvent:function(){
-			
+				
+				//页面的全局变量通过this.config.global.name获取
+				//alert(this.config.global.name);
+				
 				var data={msg:"send from Module1"};
 				$('#sandboxBtn').bind('click', function(){Sandbox.notify(Searchweb.Config.Events.DELETE, data);});
 			},
