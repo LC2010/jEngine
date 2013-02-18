@@ -20,6 +20,7 @@
    
 	var prepared = false;
 	var methods = [ "error", "warn", "info", "debug", "log"];//0-4 level
+	var browser = {};
    
 	$.extend($.Logger.prototype, {
 		level:$.Logger.level,
@@ -61,7 +62,7 @@
 			var method=methods[level];
 			var logstr=[[method+"|"].join(" | ")].concat(msg);
 			   
-			if(self.console && !$.browser.msie){
+			if(self.console && !browser.msie){
 			
 			   if(console.log.apply){
 				  console[method].apply(console, logstr);    	  
@@ -70,7 +71,7 @@
 			   }
 			}else{
 				//在IE下，如果url中添加debug=true，则日志窗口将被添加在页面的底部，帮助调试。
-				if($.browser.msie){
+				if(browser.msie){
 					if(/debug=true/i.test(location.search)){
 						!prepared && this._prepare();	
 						var msgBox = $('#DEBUG ol');
@@ -128,12 +129,25 @@
 				this._handler(level,this.name(),msgStr, moduleId);
 			}
 		},
-	
+		
+		//since jQuery 1.9 removed the support for $.browser, we add this function here
+		parseBrowser:function(){
+			
+			var userAgent = navigator.userAgent.toLowerCase(); 
+			browser = $.browser ? $.browser : { 
+				version: (userAgent.match( /.+(?:rv|it|ra|ie)[\/: ]([\d.]+)/ ) || [0,'0'])[1], 
+				safari: /webkit/.test( userAgent ), 
+				opera: /opera/.test( userAgent ), 
+				msie: /msie/.test( userAgent ) && !/opera/.test( userAgent ), 
+				mozilla: /mozilla/.test( userAgent ) && !/(compatible|webkit)/.test( userAgent ) 
+			};
+		},
+		
 		_getBrowserInfo:function(){
 			
 			var key ="&browser=";
 			var value = '';
-			$.each(jQuery.browser, function(key, val) {
+			$.each(browser, function(key, val) {
 			
 				if(key != 'version'){
 					value = value + key + " ";
@@ -178,6 +192,7 @@
 	}else{
 		$.logger.setEnableLevel(2);
 	}
+	$.logger.parseBrowser();
 	
 	//需要应用定义到自己的JS文件global配置中
 	//$.logger.setErrorUri("http://110.75.196.102/page/logError?appkey=22814abc2094a727bd6a24ba1e5a8d45");  //前端异常监控系统报警API
